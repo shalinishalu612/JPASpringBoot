@@ -35,15 +35,26 @@ public class AlienController {
 			return "Succesfully Added";
 		}
 	
-	@RequestMapping("/getAlien")
-		public ModelAndView getAlien(@RequestParam int aid){
-			ModelAndView mv =new ModelAndView("showAlien.jsp");
-			Alien alien =repo.findById(aid).orElse(new Alien()) ;
-			mv.addObject(alien);
-			System.out.println(repo.findByTech("java"));
-			return mv;
-		}
+	// @RequestMapping("/getAlien")
+	// 	public ModelAndView getAlien(@RequestParam int aid){
+	// 		ModelAndView mv =new ModelAndView("showAlien.jsp");
+	// 		Alien alien =repo.findById(aid).orElse(new Alien()) ;
+	// 		mv.addObject(alien);
+	// 		System.out.println(repo.findByTech("java"));
+	// 		return mv;
+	// 	}
 
 
-}
 	
+	@RequestMapping("/aliens")
+	@ResponseBody
+	public List<Alien> getAllAliens(){
+		return (List<Alien>) repo.findAll();
+	}
+
+	@RequestMapping("/alien/{aid}")
+	@ResponseBody
+	public Optional<Alien> getAlien(@PathVariable("aid") int aid){
+		return repo.findById(aid);
+	}
+}
